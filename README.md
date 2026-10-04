@@ -4,11 +4,11 @@ Aplicação responsiva para consultar locais de votação do Acre, com dados pú
 
 ## Recursos
 
+- Botão Pesquisar: os resultados aparecem somente após enviar a busca.
 - Busca por nome do local, rua ou bairro, sem diferenciar acentos.
 - Filtros por município, zona eleitoral e seção.
 - Reconhecimento de seções agregadas e números com zeros iniciais.
-- Filtro de locais com Mesa Receptora de Justificativa (MRJ).
-- Endereço no Google Maps, cópia do endereço e impressão dos resultados.
+- Google Maps com nome + endereço + município, botão Como chegar, cópia do endereço e impressão dos resultados.
 - Layout adaptado para celular.
 
 ## Arquivos
@@ -71,7 +71,7 @@ Estrutura de cada local:
 }
 ```
 
-Os números entre parênteses são preservados conforme a fonte. O mapa pesquisa o endereço informado, sem coordenadas verificadas.
+Os números entre parênteses são preservados conforme a fonte. O mapa pesquisa pelo nome do estabelecimento, endereço e município. A base não contém coordenadas verificadas nem Place IDs, portanto alguns locais podem continuar exigindo confirmação no Google Maps. Para ligar diretamente a um estabelecimento já conferido, adicione o campo opcional `placeId` ao registro correspondente no `data.json`; os links de mapa e rota passarão a usar esse identificador. Não preencha esse campo com um valor inventado.
 
 ## Escopo
 
