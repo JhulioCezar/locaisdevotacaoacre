@@ -5,10 +5,11 @@ Aplicação responsiva para consultar locais de votação do Acre, com dados pú
 ## Recursos
 
 - Botão Pesquisar: os resultados aparecem somente após enviar a busca.
-- Busca por nome do local, rua ou bairro, sem diferenciar acentos.
+- Pesquisa por seção obrigatória e filtros opcionais de município e zona.
+- Lista de todos os locais com busca por nome ou endereço.
 - Filtros por município, zona eleitoral e seção.
 - Reconhecimento de seções agregadas e números com zeros iniciais.
-- Google Maps com nome + endereço + município, botão Como chegar, cópia do endereço e impressão dos resultados.
+- Mapa, rota a partir da localização do dispositivo e cópia do endereço.
 - Layout adaptado para celular.
 
 ## Arquivos
@@ -75,4 +76,24 @@ Os números entre parênteses são preservados conforme a fonte. O mapa pesquisa
 
 ## Escopo
 
-Aplicação independente, sem vínculo institucional com o TRE-AC. Pesquisa locais e seções, não eleitores por nome ou CPF. Não coleta cadastros e não inclui ferramentas de análise de visitantes.
+Aplicação independente, sem vínculo institucional com o TRE-AC. Pesquisa locais e seções, não eleitores por nome ou CPF. Não coleta cadastros. A medição de acessos é opcional e depende da configuração descrita abaixo.
+
+## Nova interface de aplicativo
+
+Município e zona são opcionais e começam em Todos. A seção é obrigatória na pesquisa. Listar todos os locais dispensa a seção e respeita o município e a zona selecionados. Na lista, é possível pesquisar nomes e endereços. Nova pesquisa volta à tela inicial, preserva município e zona e limpa a seção.
+
+O botão Traçar rota pede localização do dispositivo somente ao ser acionado. Em caso de recusa ou indisponibilidade, abre o Google Maps para informar o ponto de partida. Exige HTTPS e permissão no navegador. As coordenadas são enviadas ao Google Maps, não ao contador. O destino continua dependendo do endereço da base até que suas coordenadas sejam adicionadas.
+
+Para usar coordenadas verificadas, adicione os campos numéricos `latitude` e `longitude` a cada registro em `data.json`, em graus decimais. Exemplo de formato: `"latitude": -9.123456, "longitude": -67.123456`. Esses números são apenas exemplo de formato, não correspondem a um local cadastrado. Também há suporte ao campo opcional `placeId` do Google Maps.
+
+## Ativar contador de acessos
+
+O contador GLOBAL precisa de uma conta externa, porque o GitHub Pages não executa banco ou servidor. A integração GoatCounter está pronta, mas DESATIVADA até configurar sua conta. Nenhum contador local é exibido como total global.
+
+1. Crie sua conta/site em https://www.goatcounter.com/ e cadastre o endereço https://jhuliocezar.github.io/locaisdevotacaoacre/.
+2. No arquivo `config.js`, preencha `goatcounterCode` com o código do seu site GoatCounter. Se seu endereço for `https://meu-codigo.goatcounter.com`, use apenas `meu-codigo`.
+3. Nas configurações do GoatCounter, habilite **Allow adding visitor counts on your website**, se desejar mostrar a contagem no rodapé. O painel particular funciona mesmo sem mostrar o total no site.
+4. Publique o `config.js` atualizado no GitHub.
+5. Visite o endereço público e confira o painel do GoatCounter. A contagem começa após ativação e não recupera acessos anteriores.
+
+O código só mede visitas em `jhuliocezar.github.io`; para hospedar em outro domínio, ajuste `analyticsHost`. Zona, seção, município, coordenadas e parâmetros de URL não são enviados ao contador. O contador depende de rede e pode ser bloqueado pelo navegador. Contagem representa visitas segundo a regra de sessões do GoatCounter, não comprova quantas pessoas distintas votaram ou usaram a pesquisa. Se a leitura do contador falhar, ele fica oculto e a pesquisa continua funcionando.

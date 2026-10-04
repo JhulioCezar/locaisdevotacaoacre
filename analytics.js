@@ -1,0 +1,5 @@
+'use strict';
+(()=>{const config=window.APP_CONFIG||{},code=config.goatcounterCode||'';if(!/^[a-z0-9][a-z0-9-]*$/.test(code)||location.hostname!==config.analyticsHost)return;
+// Apenas a página é medida. Município, zona, seção e coordenadas não são enviados.
+window.goatcounter={no_onload:true};const script=document.createElement('script');script.src='https://gc.zgo.at/count.js';script.async=true;script.dataset.goatcounter=`https://${code}.goatcounter.com/count`;
+script.onload=()=>{window.goatcounter.count({path:location.pathname,title:'Onde votar Acre',referrer:''});document.getElementById('visitor-counter').hidden=false;setTimeout(async()=>{try{const r=await fetch(`https://${code}.goatcounter.com/counter/${encodeURIComponent(location.pathname)}.json`,{signal:AbortSignal.timeout(8000)});if(!r.ok)throw Error('count');const d=await r.json();if(typeof d.count!=='string'&&typeof d.count!=='number')throw Error('count');document.getElementById('visitor-count').textContent=d.count;}catch{document.getElementById('visitor-counter').hidden=true;}},2000);};document.head.append(script);})();
